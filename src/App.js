@@ -22,10 +22,6 @@ const App = () => {
   const [experimentColors, setExperimentColors] = useState({});
   const [visibleExperiments, setVisibleExperiments] = useState({});
 
-  useEffect(() => {
-    setUrl('https://gist.githubusercontent.com/chigwell/9c1302de03d89263915470fc53294b9f/raw/762c23fa2c87bf6334241cd30b7fa26d299e58ad/exp-202504071521-1.csv');
-  }, []);
-
   const processCSVData = (csvData) => {
     const overallNodeSet = new Set();
     const allExtractedEdges = [];
