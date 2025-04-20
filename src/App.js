@@ -3,9 +3,6 @@ import { TextField, Button, Box, Typography, LinearProgress, Chip } from '@mui/m
 import Papa from 'papaparse';
 import { v4 as uuidv4 } from 'uuid';
 import { CosmographProvider, Cosmograph } from '@cosmograph/react';
-// Optional: Import icons if you want visual indicators on chips
-// import VisibilityIcon from '@mui/icons-material/Visibility';
-// import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#FF9999', '#77DD77', '#AEC6CF'];
 
@@ -35,7 +32,7 @@ const App = () => {
       const relationship = row[relationshipHeader];
 
       if (!fromNode || !toNode || !model || !relationship) {
-        // console.warn("Skipping row due to missing data:", row); // Можно раскомментировать для отладки
+        console.warn("Skipping row due to missing data:", row);
         return;
       }
 
@@ -83,7 +80,6 @@ const App = () => {
     }
 
     setIsLoading(true);
-    // Reset full data before loading new one
     setFullGraphData({ nodes: [], edges: [] });
     setVisibleExperiments({});
     setExperimentColors({});
@@ -138,7 +134,7 @@ const App = () => {
   };
 
   const filteredGraphData = useMemo(() => {
-    if (!fullGraphData.nodes.length) { // Check nodes instead of edges for initial empty state
+    if (!fullGraphData.nodes.length) {
       return { nodes: [], links: [] };
     }
 
@@ -155,9 +151,6 @@ const App = () => {
     const visibleNodes = fullGraphData.nodes.filter(
       node => visibleNodeIds.has(node.id)
     );
-
-    // If no edges are visible, still show nodes but disconnected? Or hide all?
-    // Current logic hides nodes if they have no visible edges. This is usually desired.
 
     return { nodes: visibleNodes, links: visibleEdges };
 
@@ -237,7 +230,7 @@ const App = () => {
               return (
                 <Chip
                   key={exp}
-                  label={exp || 'undefined'} // Show 'undefined' if exp is empty/null
+                  label={exp || 'undefined'}
                   size="small"
                   clickable
                   onClick={() => toggleExperimentVisibility(exp)}
@@ -245,11 +238,11 @@ const App = () => {
                     m: 0.5,
                     backgroundColor: color,
                     color: 'white',
-                    opacity: isVisible ? 1 : 0.4, // Make inactive more obvious
+                    opacity: isVisible ? 1 : 0.4,
                     border: isVisible ? 'none' : '1px solid #aaa',
                     cursor: 'pointer',
                     '&:hover': {
-                        opacity: isVisible ? 0.85 : 0.6, // Hover effect
+                        opacity: isVisible ? 0.85 : 0.6,
                     }
                   }}
                 />
